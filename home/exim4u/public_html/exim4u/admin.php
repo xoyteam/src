@@ -53,6 +53,12 @@
           </td>
         </tr>
           <?php
+            if ($tags == "yes") {
+              print '<tr><td><a href="admintags.php">' . _('Tags') . '</a></td></tr>';
+            }
+          ?>
+
+          <?php
             if ($mailmaninstalled != "no") {
               print '<tr><td><a href="adminlists.php">' . _('Mailman Mailing Lists') . '</a></td></tr>';
             }

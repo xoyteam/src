@@ -76,6 +76,11 @@
 
   $postmasteruidgid = "no";
 
+  /*  Tags for search and group users
+      $tags = "yes"; for enable tags
+      $tegs = "no";  for disable tegs */
+  $tags = "yes";
+
   /* The location of your mailstore for new domains.
      Make sure the directory belongs to the configured $uid/$gid!
         $mailroot = "/home/USER/mail/";
