@@ -76,6 +76,14 @@
           </td>
         </tr>
       <?php
+        if ($tags == "yes") { ?>
+        <tr>
+          <td><?php echo _('User Tags'); ?></td>
+          <td colspan="2"><a href="admintagsuser.php?user_id=0">
+          <?php echo _('Manage Tags for User'); ?></a><br></td>
+        </td>
+      <?php } ?>
+      <?php
         if ($postmasteruidgid == "yes") { ?>
         <tr>
           <td><?php echo _('UID'); ?></td>

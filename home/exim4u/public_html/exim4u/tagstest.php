@@ -1,5 +1,9 @@
 
 
 <?php
-      print ("TAG_NAME=\"".$_GET['tag_name']."\"");
+  print 'GET: ';
+  print_r ($_GET);
+  print '<br>';
+  print 'POST: ';
+  print_r ($_POST);
 ?>

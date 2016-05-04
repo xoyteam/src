@@ -32,25 +32,21 @@
 
         $query = "SELECT t.tag_id, t.tag_name FROM tags t
           WHERE t.domain_id=:domain_id"; 
-       $sth = $dbh->prepare($query);
-       $sth->execute(array(':domain_id'=>$_SESSION['domain_id']));
-       print '<form action="admintagsaddsubmit.php" method="post">';
-       while ($row = $sth->fetch()) {
-            print '<tr>';
-            print '<td class="trash">';
-            print '
-              <input type="hidden" name="tag_id" value="'.$row['tag_id'].'">
-              <input type="submit" class="tagsformsubmit" name="submit" value="submit" />
-              ';
-            print '</td>';
-            print '<td class="tags"><a href="admintagsadd.php?'
-              .'tag_id='.$row['tag_id']
-              .'&tag_name='.$row['tag_name'].'">'
-              .$row['tag_name'].'</a></td>';
-            print "</tr>\n";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array(':domain_id'=>$_SESSION['domain_id']));
+        print '<form action="admintagssubmit.php" method="post" id="deletetag"></form>';
+        while ($row = $sth->fetch()) {
+          print '<tr>';
+          print '<td class="trash">';
+          print '<input type="submit" class="tagsformsubmit" name="submitdelete" value="'.$row['tag_id'].'" form="deletetag" />';
+          print '</td>';
+          print '<td class="tags"><a href="admintagsadd.php?'
+            .'tag_id='.$row['tag_id']
+            .'&tag_name='.$row['tag_name'].'">'
+            .$row['tag_name'].'</a></td>';
+          print "</tr>\n";
         }
 
-         print'     </form>';
         ?>
       </table>
     </div>

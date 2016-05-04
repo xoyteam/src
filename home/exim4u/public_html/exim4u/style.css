@@ -48,6 +48,10 @@ table,tr,td,th {
       text-align: left;
 }
 
+th.check {
+  text-align: center;
+}
+
 td.check {
       text-align: center;
 }
@@ -128,6 +132,7 @@ body>#Header {height:28px;}
       margin: 0px 50px 50px 250px;
       padding:10px;
       overflow: auto;
+      max-width: 1000px;
       }
 
 #forms {

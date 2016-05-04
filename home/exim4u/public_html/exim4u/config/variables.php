@@ -78,7 +78,7 @@
 
   /*  Tags for search and group users
       $tags = "yes"; for enable tags
-      $tegs = "no";  for disable tegs */
+      $tegs = "no";  for disable tags */
   $tags = "yes";
 
   /* The location of your mailstore for new domains.

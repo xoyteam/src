@@ -10,12 +10,12 @@ if (isset($_GET['tag_id'])&& isset($_GET['tag_name'])){
   $query = "SELECT t.tag_id, t.tag_name FROM tags t
     WHERE t.domain_id=:domain_id AND t.tag_id=:tag_id";
   $sth = $dbh->prepare($query);
-  $sth->execute(array(':domain_id'=>$_SESSION['domain_id'],':tag_id'=>$_GET['tag_id']));
+  $sth->execute(array(':domain_id'=>$_SESSION['domain_id'],
+    ':tag_id'=>$_GET['tag_id']));
   if ($sth->rowCount() == 1){
     $row=$sth->fetch();
-    //print ('<p>'.$row['tag_name'].','.$_GET['tag_name'].','.$row['tag_id'].','.$_GET['tag_id'].'</p>');
-    //print ('<p>'.strcmp($row['tag_name'],$_GET['tag_name']).','.strcmp($row['tag_id'],$_GET['tag_id']).'</p>');
-    if ((0 != strcmp($row['tag_name'],$_GET['tag_name'])) || (0 != strcmp($row['tag_id'],$_GET['tag_id']))) {
+    if ((0 != strcmp($row['tag_name'],$_GET['tag_name']))
+      || (0 != strcmp($row['tag_id'],$_GET['tag_id']))) {
       header ("Location: admintagsadd.php?tagnotfound=true");
       die();
     }
@@ -28,12 +28,6 @@ if (isset($_GET['tag_id'])&& isset($_GET['tag_name'])){
 else {
   $row = array('tag_name'=>'','tag_id'=>'');
 }
-
-
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 ?>
 <html>
@@ -53,17 +47,22 @@ error_reporting(E_ALL);
   <div id="forms">
     <form name="admintagsadd" method="post" action="admintagssubmit.php">
       <table align="center">
-        <?php if(isset($_GET['tagnotfound'])) print '<p>Tag not found! Make new tag!</p>'; ?>
+        <?php if(isset($_GET['tagnotfound']))
+        print '<p>Tag not found! Make new tag!</p>'; ?>
         <tr>
           <td><?php echo _('Tag Name'); ?>:</td>
           <td colspan="2">
-            <input type="hidden" name="tag_id" value="<?php echo $row['tag_id']; ?>">
-            <input type="textfield" size="25" name="tag_name" class="textfield" value="<?php echo $row['tag_name']; ?>">
+            <input type="hidden" name="tag_id"
+            value="<?php echo $row['tag_id']; ?>">
+            <input type="textfield" size="25"
+            name="tag_name" class="textfield"
+            value="<?php echo $row['tag_name']; ?>">
           </td>
         </tr>
         <tr>
           <td colspan="3" class="button">
-            <input name="submit" type="submit" value="<?php echo _('Submit'); ?>">
+            <input name="submit"
+            type="submit" value="<?php echo _('Submit'); ?>">
           </td>
         </tr>
       </table>
@@ -72,4 +71,5 @@ error_reporting(E_ALL);
   </div>
   </body>
   </html>
-  <!-- Layout and CSS tricks obtained from http://www.bluerobot.com/web/layouts/ -->
+  <!-- Layout and CSS tricks obtained
+  from http://www.bluerobot.com/web/layouts/ -->

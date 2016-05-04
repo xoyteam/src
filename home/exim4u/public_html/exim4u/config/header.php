@@ -8,7 +8,7 @@
     $usrheaderrow = $usrheaderresult->fetch();
   }
   
-  print "<div id=\"Header\"><p><a href=\"http://exim4u.org/\" target=\"_blank\">" . _("Exim4U Email Admin") . "</a> ";
+  print "<div id=\"Header\"><p><a href=\"http://exim4u.org/\" target=\"_blank\">" . _("Exim4U Email Admin") . "</a>";
   if (isset($_SESSION['domain'])) {
     print     "-- " . $_SESSION['domain'] . " ";
   }
@@ -89,5 +89,5 @@
   }
   if (isset($_GET['login']) && ($_GET['login'] == "failed")) { print _("Login failed"); }
 
-  print "</p></div>";
+  print "</p></div>\n";
 ?>

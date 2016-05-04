@@ -5,7 +5,19 @@ include_once dirname(__FILE__) . '/config/authpostmaster.php';
 include_once dirname(__FILE__) . '/config/functions.php';
 
 
-
+#delete tag
+if (isset($_POST['submitdelete'])) {
+  $query = "SELECT COUNT (tag_id) AS count FROM tags WHERE tag_id=:tag_id AND domain_id=:domain_id";
+  $sth = $dbh->prepare($query);
+  $sth->execute(array(':tag_id'=>$_POST['submitdelete'],':domain_id'=>$_SESSION['domain_id']));
+  $row = $sth->fetch();
+  if ($row['count'] == "0") {
+    header('Location: admintags.php?notfounddeleteid=yes');
+    die;
+  }
+  header("Location: admintagsdelete.php?tag_id={$_POST['submitdelete']}");
+  die;
+}
 
 # check blank tagname
 if (preg_match("/^\s*$/",$_POST['tag_name'])) {
@@ -31,37 +43,34 @@ else
     die;
   }
   else {
-    // modify tag of add new tag
-    if (($tname != "") && ($_POST['tag_id'] == "")){
-      //header('Location: tagstest.php?add=yes&tag_id='.$_POST['tag_id'].'&tag_name='.$_POST['tag_name']);
-      print 'new tag<br>';
-      print 'POST=';
-    print_r($_GET);  // for all GET variables
-      print 'GET=';
-print_r($_POST); // for all POST variables
-print '<br>tname='.$tname.'<br>';
-    }else{
-      //header('Location: tagstest.php?modify=yes&tag_id='.$_POST['tag_id'].'&tag_name='.$_POST['tag_name']);
-      print 'modify tag<br>';
-      print 'POST=';
-    print_r($_GET);  // for all GET variables
-      print 'GET=';
-print_r($_POST); // for all POST variables
-print '<br>tname='.$tname.'<br>';
-    }die;
+    // add new tag
+    if (($tname != "") && ($_POST['tag_id'] == ""))
+    {
+      $query = "INSERT INTO tags (tag_name,domain_id) VALUES (:tag_name,:domain_id)";
+      $sth = $dbh->prepare($query);
+      $success = $sth->execute(array(':tag_name'=>$tname,':domain_id'=>$_SESSION['domain_id']));
+      if ($success) {
+        header ("Location: admintags.php?tagadded=1&tagname=".$tname);
+        die;
+      } else {
+        header ("Location: admintagsadd.php?errortagadded=1");
+        die;
+      }
+    }
+    else{
+      //modify tag
+      $query = "UPDATE tags SET tag_name=:tag_name WHERE tag_id=:tag_id";
+      $sth = $dbh->prepare($query);
+      $success = $sth->execute(array(':tag_name'=>$tname,':tag_id'=>$_POST['tag_id']));
+      if ($success) {
+        header ("Location: admintags.php?tagupdated=1&tagname=".$tname);
+        die;
+      } else {
+        header ("Location: admintagsadd.php?errorupdate=1");
+        die;
+      }
+    }
   }
-}
-
-#$query = "INSERT INTO tags (tag_name) VALUES (:tag_name)";
-#$sth = $dbh->prepare($query);
-#$success = $sth->execute(':tag_name'=>$_POST['tag_name']);
-#if ($success) {
-if (1) {
-  header ("Location: admintags.php?tagadded=1&tagname=".$_POST['tag_name']);
-  die;
-} else {
-  header ("Location: admintags.php?tagadded=0");
-  die;
 }
 ?>
 <!-- Layout and CSS tricks obtained from http://www.bluerobot.com/web/layouts/ -->
